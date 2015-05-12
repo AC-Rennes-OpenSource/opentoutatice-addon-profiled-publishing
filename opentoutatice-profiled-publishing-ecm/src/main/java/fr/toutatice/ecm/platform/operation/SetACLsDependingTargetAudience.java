@@ -116,7 +116,7 @@ public class SetACLsDependingTargetAudience {
 				}else{
 					
 					DocumentModel docParent = session.getParentDocument(this.doc.getRef());
-					acl =ToutaticeDocumentHelper.getDocumentACL(session, docParent, null, filter);
+					acl =ToutaticeDocumentHelper.getDocumentACL(session, docParent, "*", filter);
 				}
 	    		
 	    		// liste des ACEs à setter sur le document
@@ -150,7 +150,7 @@ public class SetACLsDependingTargetAudience {
 					this.doc=(DocumentModel)ToutaticeOperationHelper.callOperation(ctx, SetDocumentACL.ID, parameters);					
 				} catch (Exception e) {
 					throw new ClientException(e);
-				}
+    			}
 				
 	    	}
 			
