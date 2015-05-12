@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<component name="toutatice.ecm.plateform.ppf.generic.ui">
+
+	<require>fr.toutatice.ecm.platform.generic.ui.GenericUIService
+	</require>
+
+	<extension target="fr.toutatice.ecm.platform.generic.ui.GenericUIService"
+		point="layouts">
+
+		<documentation>
+			Chaque layout (attribut name) est ajouté dans un mode
+			donné à une position donnée;
+			Le tag "position" accepte les sous-tags
+			"before" (où on indique la layout avant lequel
+			notre layout à ajouter
+			doit être placé), le tag "after" (où on indique la layout après
+			lequel notre layout à ajouter doit être placé) et la tag "at" qui
+			indique la position
+			du layout à ajouter dans la liste des layouts présents; attention, la
+			numérotation commence
+			à 1 et "end" indique qu'on place notre layout à
+			la fin de la liste;
+			Par défaut, si les layouts indiqués dans les
+			balises "before" ou "after" ne sont pas trouvés,
+			le layout est placé
+			en fin de liste.
+			En outre, il est possible d'exclure des types pour
+			lesquels on ne veut pas que le layout soit
+			inséré: tag
+			"excludedTypes/type".
+		</documentation>
+
+       <layouts mode="edit">
+       		<layout name="layout_selectTarget">
+       			<position>
+       				<at>end</at>
+       			</position>
+       		</layout>
+       </layouts>
+       <layouts mode="view">
+       		<layout name="layout_selectTarget">
+       			<position>
+       				<at>end</at>
+       			</position>
+       		</layout>
+       	</layouts>
+       	 <layouts mode="create">
+       		<layout name="layout_selectTarget">
+       			<position>
+       				<at>end</at>
+       			</position>
+       		</layout>
+       	</layouts>
+       
+	</extension>
+
+</component>

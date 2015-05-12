@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 1
+Bundle-Name: Acaren Agenda Plugin
+Bundle-SymbolicName: fr.toutatice.ecm.platform.profiled.publishing;singleton:=true
+Bundle-Localization: plugin
+Bundle-Vendor: Acaren
+Bundle-Version: 2.0.0
+Nuxeo-Component: 
+ OSGI-INF/toutatice-ppf-actions-contrib.xml,
+ OSGI-INF/toutatice-ppf-layouts-contrib.xml,
+ OSGI-INF/toutatice-ppf-theme-contrib.xml,
+ OSGI-INF/toutatice-ppf-chains-contrib.xml,
+ OSGI-INF/toutatice-ppf-operations-contrib.xml,
+ OSGI-INF/toutatice-ppf-generic-ui-contrib.xml,
+ OSGI-INF/toutatice-ppf-eventlistener-contrib.xml

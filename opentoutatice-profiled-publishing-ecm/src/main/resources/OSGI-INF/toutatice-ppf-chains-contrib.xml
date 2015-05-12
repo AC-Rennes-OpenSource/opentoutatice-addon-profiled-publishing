@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<component name="fr.toutatice.ecm.acrennes.automation.ppf.chains">
+	<requeried>toutatice.ecm.plateform.automation.chains</requeried>
+
+	<extension target="org.nuxeo.ecm.core.operation.OperationServiceComponent"
+		point="chains">
+
+		<chain id="updateAcls">
+			<operation id="Context.FetchDocument" />
+			<operation id="Document.SetACLsDependingTargetAudience">
+				<param type="boolean" name="isDirect">true</param>
+				<param type="String" name="targetsXpath">ttc:lstTargetedPublic</param>
+			</operation>			
+		</chain>
+	</extension>
+</component>

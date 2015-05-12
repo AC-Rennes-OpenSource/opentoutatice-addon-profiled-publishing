@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<project name="opentoutatice-profiled-publishing" default="all" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+
+	<artifact:pom id="pom" file="pom.xml" />
+
+	 <echo>Projet ${pom.artifactId} ${pom.version}</echo>
+
+
+  <!-- Création d'un fichier build.properties à partir de build.properties.sample 
+  pour changer les chemins -->
+  <property file="build.properties"/>
+	
+	<property name="nuxeo.dir" value="~/opt/nuxeo-dm"/>
+  <property name="build.dir" value="${basedir}/target"/>
+  <property name="deploy.dir" value="${nuxeo.dir}/nxserver/"/>
+  <property name="maven.home" value="/usr/share/maven2/"/>
+  <property name="nuxeoctl" value="${nuxeo.dir}/bin/nuxeoctl"/>
+	
+  <target name="deploy" depends="package,copy,nxrestart" description="Build et copie dans Nuxeo"/>
+
+	<target name="nxrestart">
+      <exec executable="${nuxeoctl}" failonerror="true">
+        <arg value="restart" />
+      </exec>
+    </target>
+
+	<target name="stop nuxeo">
+      <exec executable="${nuxeoctl}" failonerror="true">
+        <arg value="stop" />
+      </exec>
+    </target>
+
+	<target name="start nuxeo background">
+      <exec executable="${nuxeoctl}" failonerror="true">
+        <arg value="startbg" />
+      </exec>
+    </target>
+
+  <target name="install" description="Build">
+    <artifact:mvn pom="pom.xml" mavenHome="${maven.home}" fork="true">
+       <arg value="install"/>
+     </artifact:mvn>
+  </target>
+  
+	<target name="nexus" depends="clean,deploy-nexus" description="Livraison sur le NEXUS"/>
+	<target name="deploy-nexus">
+    <artifact:mvn pom="pom.xml" mavenHome="${maven.home}" fork="true">
+       <arg value="deploy"/>
+     </artifact:mvn>
+	</target>
+	
+	<target name="package" description="Build">
+    <artifact:mvn pom="pom.xml" mavenHome="${maven.home}" fork="true">
+       <arg value="package"/>
+     </artifact:mvn>
+  </target>
+ 
+ 	<target name="package no test" description="Build">
+    <artifact:mvn pom="pom.xml" mavenHome="${maven.home}" fork="true">
+       <arg value="package"/>
+    	<arg value="-Dmaven.test.skip=true"/>
+     </artifact:mvn>
+  </target>
+
+  <target name="clean" description="Nettoyage">
+    <artifact:mvn pom="${basedir}/pom.xml" mavenHome="${maven.home}" fork="true">
+       <arg value="clean"/>
+     </artifact:mvn>
+  	</target>
+
+  <target name="copy" description="Copie du JAR dans le dossier plugins de Nuxeo">
+    <copy todir="${deploy.dir}/plugins/"
+          file="${build.dir}/${pom.artifactId}-${pom.version}.jar"
+          overwrite="true"/>
+    <!-- Could copy other files to .../config too -->
+  </target>
+
+  <target name="web" description="Copie des fichiers WEB">
+    <copy todir="${deploy.dir}/nuxeo.war"
+          overwrite="true">
+      <fileset dir="${basedir}/src/main/resources/nuxeo.war/"/>
+    </copy>
+  </target>
+
+	
+	<target name="seam" depends="clean-seam-hotdeploy-dir">
+	 <antcall target="clean">
+	   <param name="mvn.lifecycle" value="clean"/>
+	 </antcall>
+	 <antcall target="install">
+	   <param name="mvn.lifecycle" value="compile"/>
+	 </antcall>
+	 <echo message="Deploy Seam components in ${seam.hotdeploy.dir}"/>
+	 <copy todir="${seam.hotdeploy.dir}" flatten="false">
+	   <fileset dir="./target/classes">
+	     <include name="**/*.class"/>
+	   </fileset>
+	 </copy>
+	 <get dest="./seam_hotdeploy_result.html" src="http://127.0.0.1:8080/nuxeo/restAPI/seamReload" username="Administrator" password="Administrator"/>
+	</target>
+
+	<target name="clean-seam-hotdeploy-dir">
+	 <delete>
+	   <fileset dir="${seam.hotdeploy.dir}">
+	     <include name="*"/>
+	   </fileset>
+	 </delete>
+	</target>
+
+  <!-- Ant target :   all -->
+  <target name="all" depends="clean, deploy"
+    description="clean build and deploy">
+    <echo>Module ${name} built and deployed </echo>
+
+  </target>
+	
+  <echo>Fin</echo>
+
+</project>

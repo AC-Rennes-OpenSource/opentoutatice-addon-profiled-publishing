@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<component name="toutatice.ecm.plateform.ppf.actions">
+
+	<require>studio.extensions.ACRENNES2</require>
+
+	<extension target="org.nuxeo.ecm.platform.actions.ActionService"
+		point="actions">
+
+		<!-- sous-onglet de l'onglet 'Administration' pour la liste de public cible 
+			autorisé -->
+
+		<action id="ATAB_TOUTATICE_PPF_ACTIONS" label="ppf.subtab.name"
+			order="200" link="/incl/tabs/ppf_administrate_list_auth.xhtml">
+			<category>TAB_MANAGE_sub_tab</category>
+			<filter-id>not_version</filter-id>
+			<filter-id>facetTTCPublishSpace</filter-id>					
+		</action>
+		
+	</extension>
+
+	<extension target="org.nuxeo.ecm.platform.actions.ActionService"
+		point="filters">
+
+		<filter id="facetTTCPublishSpace">
+			<rule grant="true">
+				<facet>TTCPublishSpace</facet>
+			</rule>
+		</filter>	
+		
+	</extension>
+	
+</component>

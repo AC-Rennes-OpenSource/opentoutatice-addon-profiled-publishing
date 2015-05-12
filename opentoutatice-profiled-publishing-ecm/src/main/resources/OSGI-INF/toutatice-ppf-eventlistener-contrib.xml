@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<component name="toutatice.ecm.plateform.ppf.listener">
+
+<require>org.nuxeo.ecm.core.event.EventServiceComponent</require>
+
+	<extension target="org.nuxeo.ecm.core.event.EventServiceComponent"
+		point="listener">
+
+		<listener name="ppflistener" async="false" postCommit="false"
+			class="fr.toutatice.ecm.platform.listener.PPFEventListener"
+			priority="160">
+			<event>emptyDocumentModelCreated</event>				
+			<event>documentCreated</event>
+			<event>beforeDocumentModification</event>	
+		</listener>
+	</extension>
+</component>

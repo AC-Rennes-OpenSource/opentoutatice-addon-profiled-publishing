@@ -1,0 +1,94 @@
+
+<f:subview xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:nxu="http://nuxeo.org/nxweb/util"
+	xmlns:nxdir="http://nuxeo.org/nxdirectory"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:nxh="http://nuxeo.org/nxweb/html" id="#{widget.id}">
+
+<c:if test="#{documentActions.belongToPublishSpace()}">
+	<c:set var="switchItemLabelVoc"
+		value="#{nxu:test(not empty widget.properties.switchItemLabel,widget.properties.switchItemLabel , '')}" />
+
+	<c:if test="#{widget.mode == 'view' }">
+		<c:set var="targets" value="#{targetPublicActions.getKeysChosen()}" />
+
+		<c:if test="#{not empty targets}">
+			<div class="vocSelection">
+				<ul>
+					<c:forEach items="#{targets}" var="target">
+						<li><h:outputText value="#{target}" /></li>
+					</c:forEach>
+				</ul>
+			</div>
+		</c:if>
+		<c:if test="#{empty targets}">
+			<div class="vocSelection">
+				<ul>
+					<li>#{messages[switchItemLabelVoc]}</li>
+				</ul>
+			</div>
+		</c:if>
+	</c:if>
+
+
+	<c:if test="#{widget.mode == 'edit' }">
+		
+		<c:set var="lstItemsSelectable" value="#{targetPublicActions.lstItemsSelectable}"/>	
+		
+
+
+		<a4j:region id="#{widget.id}_region" renderRegionOnly="true">
+			<a4j:outputPanel id="#{widget.id}_editselect">
+			
+				<div class="checkDiv" id="#{widget.id}_check">
+				
+				<h:selectBooleanCheckbox value="#{targetPublicActions.isDefaultValue}">              
+          				<a4j:ajax event="click" render="#{widget.id}_editselect"/>
+     			 	</h:selectBooleanCheckbox>
+				<h:outputText value="#{messages[switchItemLabelVoc]}" />
+			 	<c:set var="styleBodySelection" value="#{nxu:test(targetPublicActions.isDefaultValue,'display:none;','')}" />
+
+				
+				</div>
+			
+				<div id="#{widget.id}_selectbox" style="#{nxu:test(empty lstItemsSelectable,'display:none;',styleBodySelection)}">
+
+					<h:selectManyListbox id="#{widget.id}_targetSelectable"
+						value="#{targetPublicActions.lstTargetSelected}">
+						<f:selectItems value="#{lstItemsSelectable}" />
+						<a4j:ajax event="change" />
+					</h:selectManyListbox>
+
+					<div class="vocAddItemButton">
+						<a4j:commandButton id="#{widget.id}_add" immediate="true"
+							actionListener="#{targetPublicActions.addSelectedItems()}"
+							render="#{widget.id}_editselect" image="/icons/action_add.gif" />
+					</div>
+				</div>
+
+				<div class="vocSelection" style="#{styleBodySelection}">
+
+
+					<c:forEach var="item"
+						items="#{targetPublicActions.getKeysChosen()}" varStatus="vs">
+						<div>
+							<a4j:commandButton id="#{widget.id}_#{vs.index}_del"
+								immediate="true"
+								actionListener="#{targetPublicActions.remove(item)}"
+								render="#{widget.id}_editselect"
+								image="/icons/delete_red.png" />
+							<h:outputText id="#{widget.id}_#{vs.index}_target"
+								value="#{item}" />
+						</div>
+					</c:forEach>
+				</div>
+
+			</a4j:outputPanel>
+			<h:message styleClass="errorMessage" for="#{widget.id}_editselect"
+				id="#{widget.id}_message" />
+		</a4j:region>
+	</c:if>
+</c:if>
+</f:subview>

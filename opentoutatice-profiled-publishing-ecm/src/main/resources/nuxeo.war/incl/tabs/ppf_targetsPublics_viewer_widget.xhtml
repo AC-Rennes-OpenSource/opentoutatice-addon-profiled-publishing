@@ -1,0 +1,85 @@
+<f:subview xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:nxu="http://nuxeo.org/nxweb/util"
+	xmlns:nxl="http://nuxeo.org/nxforms/layout"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+
+	<!-- <c:choose>
+		<c:when test="#{widget.mode =='edit'}">
+			<c:set var="doc" value="#{currentDocument}" />
+		</c:when>
+		<c:otherwise>
+			<c:set var="doc" value="#{documentManager.getDocument((currentDocument.getParentRef()))}" />
+		</c:otherwise>
+	</c:choose> -->
+	
+	<c:set var="lstAuth" value="#{targetPublicActions.getLstPublishAuth()}" />
+
+	<a4j:outputPanel id="targetPublicList">
+		<h3>Liste de publics cibles autorisés</h3>
+		<nxu:dataTable id="targetPublicTable" var="public" value="#{lstAuth}"
+			rowClasses="dataRowEven,dataRowOdd" styleClass="dataOutput">
+
+			<nxu:column>
+				<f:facet name="header">
+					<h:outputText value="#{messages['ppf.group.id']}" />
+				</f:facet>
+				<h:outputText value="#{public.pcid}" />
+			</nxu:column>
+			<nxu:column>
+				<f:facet name="header">
+					<h:outputText value="#{messages['ppf.group.label']}" />
+				</f:facet>
+				<h:outputText value="#{public.pclabel}" />
+			</nxu:column>
+			<nxu:column>
+				<f:facet name="header">
+					<h:outputText value="#{messages['ppf.group.order']}" />
+				</f:facet>
+				<h:outputText value="#{public.pcorder}" />
+			</nxu:column>
+			<nxu:column styleClass="iconColumn">
+				<a4j:commandLink immediate="true"
+					action="#{targetPublicActions.removeTargetPublicAuth(public.pcid)}"
+					render="targetPublicList" ignoreDupResponses="true">
+					<h:graphicImage value="/icons/delete_red.png" />
+				</a4j:commandLink>
+			</nxu:column>
+
+		</nxu:dataTable>
+	</a4j:outputPanel>
+
+	<c:if test="#{widget.mode =='edit'}">
+		<h3>Ajouter un groupe dans la liste de publics cibles autorisés</h3>
+
+		<div id="finderGroup">
+			<nxl:widget name="selectiongroup" category="" mode="edit"
+				value="#{targetPublicActions.groupName}" />
+		</div>
+
+		<div>
+			<div>
+				<span class="rightsAddLabel"><h:outputText
+						value="#{messages['ppf.group.label']}" /></span>
+				<h:inputText value="#{targetPublicActions.label}" />
+			</div>
+
+			<div>
+				<span class="rightsAddLabel"><h:outputText
+						value="#{messages['ppf.group.order']}" /></span>
+				<h:inputText value="#{targetPublicActions.order}" />
+			</div>
+
+			<div>
+				<h:commandButton value="#{messages['ppf.command.target.add']}"
+					class="button"
+					action="#{targetPublicActions.addTargetPublicAuth()}" />
+			</div>
+		</div>
+
+	</c:if>
+
+</f:subview>

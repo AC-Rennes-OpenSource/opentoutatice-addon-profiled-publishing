@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<project name="Nuxeo Distribution" default="install" basedir=".">
+
+  <property file="build.properties" />
+  <property name="mvn.opts" value="" />
+
+  <condition property="osfamily-unix">
+    <os family="unix" />
+  </condition>
+
+  <target name="install" if="osfamily-unix">
+    <exec executable="mvn" failonerror="true">
+      <arg value="-f" />
+      <arg value="./pom.xml" />
+      <arg value="clean" />
+      <arg value="install" />
+      <arg value="-pl" />
+      <arg value="opentoutatice-profiled-publishing-ecm" />
+      <!--arg value="-DskipTests=true" /-->
+    </exec>
+  </target>
+
+  <target name="marketplace" if="osfamily-unix">
+    <exec executable="mvn" failonerror="true">
+      <arg value="-f" />
+      <arg value="./pom.xml" />
+      <arg value="clean" />
+      <arg value="install" />
+      <!--arg value="-DskipTests=true" /-->
+    </exec>
+  </target>
+
+</project>

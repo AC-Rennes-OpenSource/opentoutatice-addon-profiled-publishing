@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<component name="toutatice.ppf.theme">
+
+	<require>org.nuxeo.theme.core</require>
+	<require>fr.gouv.education.acrennes.ged.web.theme.contrib</require>
+	
+
+	<extension target="org.nuxeo.theme.styling.service" point="styles">
+		
+		<style name="ppf">
+			<src>themes/css/ppf.css</src>
+		</style>		
+	</extension>
+
+	
+	<extension target="org.nuxeo.theme.styling.service" point="pages">
+		<themePage name="acrennes/default">
+			<styles append="true">
+				<style>ppf</style>				
+			</styles>
+		</themePage>
+		<themePage name="toutatice/popup">
+			<styles append="true">
+				<style>ppf</style>			
+			</styles>
+		</themePage>
+	</extension>
+	
+
+</component>

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<component name="toutatice.ecm.plateform.ppf.layouts">
+
+	<require>org.nuxeo.ecm.platform.forms.layout.WebLayoutManager</require>
+
+	<extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
+		point="layouts">
+		
+		<layout name="layout_selectTarget">
+			<templates>
+				<template mode="any">/layouts/ACRENNES2_layout_template.xhtml
+				</template>
+			</templates>
+			<rows>
+				<row>
+					<widget>selectTarget</widget>
+				</row>
+			</rows>
+		</layout>
+		
+	</extension>
+
+	<extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
+		point="widgets">
+
+		<widget name="selectiongroup" type="template">
+			<labels>
+				<label mode="any" />
+			</labels>
+			<fields>
+          		<field/>
+        	</fields>
+			<properties mode="any">
+				<property name="template">
+					/widgets/user_suggestion_widget_template.xhtml
+				</property>
+				<property name="userSuggestionSearchType">GROUP_TYPE</property>				
+			</properties>
+		</widget>
+		
+		<widget name="selectTarget" type="template">
+			<labels>
+				<label mode="any">Publique cible</label>
+			</labels>
+			<widgetModes>
+		        <mode value="any">#{empty targetPublicActions.getLstPublishAuth()?'hidden' : layout.mode}</mode>
+		    </widgetModes>
+			<translated>false</translated>
+			<fields>
+				<field/>
+			</fields>
+			<properties widgetMode="any">
+				<property name="template">/widgets/ppf_selectTargetPublic_widget.xhtml
+				</property>
+				<property name="switchItemLabel">ppf.target.notselected</property>				
+			</properties>
+	  </widget>
+		
+	</extension>
+
+	<extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
+		point="widgettypes">
+
+		<widgetType name="targetsPublics_viewer_widgetType">
+			<configuration>
+				<supportedModes>
+					<mode>view</mode>
+				</supportedModes>
+			</configuration>
+			<handler-class>
+				org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+			</handler-class>
+			<property name="template">
+				/incl/tabs/ppf_targetsPublics_viewer_widget.xhtml
+			</property>
+		</widgetType>
+	</extension>
+</component>
