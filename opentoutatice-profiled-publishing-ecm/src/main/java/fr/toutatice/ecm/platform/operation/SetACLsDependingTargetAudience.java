@@ -63,6 +63,9 @@ public class SetACLsDependingTargetAudience {
 	@Param(name = "isDirect", required = true)
 	protected boolean isDirect;
 	
+	@Param(name = "aclName", required = false)
+	protected String aclName;
+	
     @Context
     protected CoreSession session;
     
@@ -111,12 +114,15 @@ public class SetACLsDependingTargetAudience {
 					}
 				};	
 				ACL acl = null;
+				if(aclName==null){
+					aclName="*";
+				}
 				if(isDirect){
-					acl = ToutaticeDocumentHelper.getDocumentACL(session,this.doc,null,filter);
+					acl = ToutaticeDocumentHelper.getDocumentACL(session,this.doc,aclName,filter);
 				}else{
 					
 					DocumentModel docParent = session.getParentDocument(this.doc.getRef());
-					acl =ToutaticeDocumentHelper.getDocumentACL(session, docParent, "*", filter);
+					acl =ToutaticeDocumentHelper.getDocumentACL(session, docParent, aclName, filter);
 				}
 	    		
 	    		// liste des ACEs à setter sur le document
