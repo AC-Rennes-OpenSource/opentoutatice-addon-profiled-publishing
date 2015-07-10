@@ -40,7 +40,7 @@
 		
 		<widget name="selectTarget" type="template">
 			<labels>
-				<label mode="any">Publique cible</label>
+				<label mode="any">Public cible</label>
 			</labels>
 			<widgetModes>
 		        <mode value="any">#{empty targetPublicActions.getLstPublishAuth()?'hidden' : layout.mode}</mode>
