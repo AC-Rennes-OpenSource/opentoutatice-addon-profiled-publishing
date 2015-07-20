@@ -38,13 +38,7 @@
        			</position>
        		</layout>
        </layouts>
-       <layouts mode="view">
-       		<layout name="layout_selectTarget">
-       			<position>
-       				<at>end</at>
-       			</position>
-       		</layout>
-       	</layouts>
+
        	 <layouts mode="create">
        		<layout name="layout_selectTarget">
        			<position>
