@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jstl/core"
 	xmlns:nxu="http://nuxeo.org/nxweb/util"
-	xmlns:nxdir="http://nuxeo.org/nxdirectory"
+	xmlns:nxl="http://nuxeo.org/nxforms/layout"
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:nxh="http://nuxeo.org/nxweb/html" id="#{widget.id}">
 
@@ -34,56 +34,29 @@
 
 
 	<c:if test="#{widget.mode == 'edit' }">
-		
-		<c:set var="lstItemsSelectable" value="#{targetPublicActions.lstItemsSelectable}"/>	
-		
-
-
 		<a4j:region id="#{widget.id}_region" renderRegionOnly="true">
 			<a4j:outputPanel id="#{widget.id}_editselect">
 			
+				
+				<c:set var="switchState" value="#{documentActions.mapSwitchState['ttc:lstTargetedPublic']}" />
 				<div class="checkDiv" id="#{widget.id}_check">
-				
-				<h:selectBooleanCheckbox value="#{targetPublicActions.isDefaultValue}">              
-          				<a4j:ajax event="click" render="#{widget.id}_editselect"/>
-     			 	</h:selectBooleanCheckbox>
-				<h:outputText value="#{messages[switchItemLabelVoc]}" />
-			 	<c:set var="styleBodySelection" value="#{nxu:test(targetPublicActions.isDefaultValue,'display:none;','')}" />
-
-				
+						
+						<h:selectBooleanCheckbox value="#{switchState}" id="#{widget.id}_booleanCheck">		             
+			  				<a4j:ajax event="click" immediate="true" render="#{widget.id}_editselect" execute="@this" limitRender="true"/>
+		     			 	</h:selectBooleanCheckbox>
+						<h:outputText value="#{messages[switchItemLabelVoc]}" />
+						
 				</div>
-			
-				<div id="#{widget.id}_selectbox" style="#{nxu:test(empty lstItemsSelectable,'display:none;',styleBodySelection)}">
+				<div id="#{widget.id}_selectbox" style="#{nxu:test(switchState,'display:none;','')}">
 
-					<h:selectManyListbox id="#{widget.id}_targetSelectable"
-						value="#{targetPublicActions.lstTargetSelected}">
-						<f:selectItems value="#{lstItemsSelectable}" />
-						<a4j:ajax event="change" />
-					</h:selectManyListbox>
-
-					<div class="vocAddItemButton">
-						<a4j:commandButton id="#{widget.id}_add" immediate="true"
-							actionListener="#{targetPublicActions.addSelectedItems()}"
-							render="#{widget.id}_editselect" image="/icons/action_add.gif" />
-					</div>
-				</div>
-
-				<div class="vocSelection" style="#{styleBodySelection}">
-
-
-					<c:forEach var="item"
-						items="#{targetPublicActions.getKeysChosen()}" varStatus="vs">
-						<div>
-							<a4j:commandButton id="#{widget.id}_#{vs.index}_del"
-								immediate="true"
-								actionListener="#{targetPublicActions.remove(item)}"
-								render="#{widget.id}_editselect"
-								image="/icons/delete_red.png" />
-							<h:outputText id="#{widget.id}_#{vs.index}_target"
-								value="#{item}" />
-						</div>
-					</c:forEach>
-				</div>
+					
+					<nxl:widgetType name="shuttle" mode="edit" value="#{targetPublicActions.lstValuesChosen}" 
+				    		sourceItemVar="target" sourceItems="#{targetPublicActions.lstItemsSelectable}" sourceItemValue="#{target.value}" sourceItemLabel="#{target.key}" 
+							targetItemValue="#{target.value}" targetItemLabel="#{target.key}" targetItems="#{targetPublicActions.lstItemsChosen}" targetItemVar="target" 
+							selectedElementsLabel="Cibles sélectionnées" availableElementsLabel="Cibles disponibles"
+							/>
+				 </div>
+							
 
 			</a4j:outputPanel>
 			<h:message styleClass="errorMessage" for="#{widget.id}_editselect"

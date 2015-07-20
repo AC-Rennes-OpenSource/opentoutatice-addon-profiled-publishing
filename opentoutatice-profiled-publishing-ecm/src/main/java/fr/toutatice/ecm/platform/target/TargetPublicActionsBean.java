@@ -49,6 +49,8 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 	protected List<String> groupName;
 	protected String label;
 	protected Integer order;
+	
+	
 
 	// -------------------------- gestion de la liste des publics cibles authorisés -----------------------------------
 
@@ -198,9 +200,9 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 
 	private Map<String,String> lstItemsSelectable = null;	
 	private Map<String,String> lstItemsChosen = null;	
-	private String[] lstTargetSelected;
 	private Map<String,String> targetsDocument = null; 
 	private Boolean isDefaultValue = null;
+	private List<String> lstValuesChosen = new ArrayList<String>();
 	
 	/**
 	 * 
@@ -231,10 +233,7 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 	public Map<String,String> getLstItemsSelectable() throws ClientException {
 		
 		if(lstItemsSelectable==null && getTargetsDocument()!=null){
-			lstItemsSelectable = new LinkedHashMap<String, String>();
-			for (String item : getTargetsDocument().keySet()) {
-				lstItemsSelectable.put(targetsDocument.get(item), item);
-			}			
+			initListsItems();
 		}
 		return lstItemsSelectable;
 	}
@@ -246,25 +245,12 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 	 */
 	public Map<String, String> getLstItemsChosen() throws ClientException{
 		if(lstItemsChosen==null && getTargetsDocument()!=null){
-			// vérifier si le document courant posséde des cibles
-			DocumentModel doc = navigationContext.getCurrentDocument();
-			lstItemsChosen = new HashMap<String,String>();
-			Property ppt = doc.getProperty(XPATH_LST_TARGETED_PUBLIC);
-			String[] tabCibles = ppt.convertTo(ppt.getValue(),String[].class);		 
-			if(tabCibles!=null){
-				for (String cible : tabCibles) {
-					String label = getTargetsDocument().get(cible);
-					if(label==null){
-						//la cible a été retirée de l'espace de publication
-						label=cible;
-					}
-					lstItemsChosen.put(label, cible);					
-					getLstItemsSelectable().remove(label);
-				}				
-			}			
+			initListsItems();
 		}
 		return lstItemsChosen;
 	}
+	
+	
 	
 	public List<String> getKeysChosen() throws ClientException{
 		if(lstItemsChosen==null){
@@ -273,66 +259,46 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 		return new ArrayList<String>(lstItemsChosen.keySet());	
 	}
 	
-	public void addSelectedItems()throws PropertyException, ClientException{
-		
-		for (String value : lstTargetSelected) {							
-			lstItemsChosen.put(targetsDocument.get(value), value);
-			lstItemsSelectable.remove(targetsDocument.get(value));
-		}
-		lstTargetSelected=new String[0];
+	public List<String> getLstValuesChosen() {
+		return lstValuesChosen;
+	}
+
+	public void setLstValuesChosen(List<String> lstValuesChosen) throws ClientException{
+		this.lstValuesChosen = lstValuesChosen;
 		updatePropertyDocument();
 	}
 	
 
-	public void remove(String key)throws PropertyException, ClientException{
-		//si la clé et la valeur sont le même objet alors cela signifie que cette cible n'existe plus sur l'espace de publication
-		if(key!=lstItemsChosen.get(key)){
-			lstItemsSelectable.put(key,lstItemsChosen.get(key));
-		}
-		lstItemsChosen.remove(key);		
-		lstTargetSelected=new String[0];	
+
+	private void initListsItems(){
 		
-	
-		updatePropertyDocument();
-	}
-	
-	
-	public String[] getLstTargetSelected() {
-		return lstTargetSelected;
-	}
-
-	public void setLstTargetSelected(String[] lstTargetSelected) {
-		this.lstTargetSelected = lstTargetSelected;
-	}	
-
-	
-	public Boolean getIsDefaultValue() {
-		if(this.isDefaultValue==null){
+			// vérifier si le document courant posséde des cibles
 			DocumentModel doc = navigationContext.getCurrentDocument();
-			String[] lst = (String[]) doc.getPropertyValue(XPATH_LST_TARGETED_PUBLIC);
-			isDefaultValue = lst==null || lst.length==0;
-
-		}
-		return isDefaultValue;
+			lstItemsChosen = new HashMap<String,String>();
+			lstItemsSelectable = new HashMap<String,String>();
+			
+			Property ppt = doc.getProperty(XPATH_LST_TARGETED_PUBLIC);
+			List<String>tabCibles = ppt.convertTo(ppt.getValue(),List.class);
+			for (String item : getTargetsDocument().keySet()) {
+				if(tabCibles.contains(item)){
+					lstItemsChosen.put(targetsDocument.get(item), item);
+					lstValuesChosen.add(item);
+				}else{
+					lstItemsSelectable.put(targetsDocument.get(item), item);	
+				}
+				
+			}
+			
 	}
-
-	public void setIsDefaultValue(Boolean isDefaultValue) {
-		this.isDefaultValue = isDefaultValue;
-		updatePropertyDocument();
-	}
-
+	
 	private void updatePropertyDocument() throws PropertyException, ClientException{
 		
 		DocumentModel doc = navigationContext.getChangeableDocument();
 		if(doc == null){
 			doc = navigationContext.getCurrentDocument();
 		}
-		String[] tab = {};
-		if(!this.isDefaultValue){		
-		 tab = lstItemsChosen.values().toArray(new String[lstItemsChosen.size()]);
-		}
-		doc.setProperty("toutatice", "lstTargetedPublic", tab);
-		
+		String[] tab = lstValuesChosen.toArray(new String[lstValuesChosen.size()]);		
+		doc.setProperty("toutatice", "lstTargetedPublic", tab);		
 	}
 
 	// ------------------------------------ classes internes -------------------------------------------
@@ -380,29 +346,5 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 		}
 	 }
 
-//	private static class UnrestrictedGetPropertyValueRunner extends UnrestrictedSessionRunner {
-//		private Object value;
-//		private String property;
-//		private DocumentModel document;
-//
-//		public Object getValue() {
-//			return this.value;
-//		}
-//
-//		protected UnrestrictedGetPropertyValueRunner(CoreSession session, DocumentModel document, String property) {
-//			super(session);
-//			this.property = property;
-//			this.document = document;
-//		}
-//
-//		@Override
-//		public void run() throws ClientException {
-//			DocumentModelList lstParent = ToutaticeDocumentHelper.getParentPublishSpaceList(session, document, true, true);
-//			DocumentModel doc = document;
-//			if (lstParent != null && !lstParent.isEmpty()) {
-//				doc = lstParent.get(0);
-//			}
-//			this.value = doc.getPropertyValue(property);
-//		}
-//	}
+
 }
