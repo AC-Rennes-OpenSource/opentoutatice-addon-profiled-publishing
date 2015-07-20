@@ -15,6 +15,12 @@
 			<filter-id>not_version</filter-id>
 			<filter-id>facetTTCPublishSpace</filter-id>					
 		</action>
+		<action id="summary_ppf_target" order="700" label="toto" type="widget">
+			<category>SUMMARY_PANEL_LEFT</category>
+			<properties>
+				<property name="widgetName">selectTarget</property>
+			</properties>
+		</action>
 		
 	</extension>
 
