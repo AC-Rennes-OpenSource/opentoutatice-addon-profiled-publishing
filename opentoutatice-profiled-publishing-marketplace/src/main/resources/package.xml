@@ -3,7 +3,11 @@
 	<title>Addon implementing the profiled publishing feature</title>
 	<description>
 		<p> Evolutions:
-			* Nuxeo 6.0 compliant
+			* # 4110 : Visualiser le public cible dans la vue résumé
+			* # 4114 : relooking de widget de selection des cibles
+			Corrections :
+			* # 4112 : Problème de gestion de droits
+			* # 4108 : Problème d'orthographe
 		</p>		
 	</description>
 	<home-page>http://www.toutatice.fr</home-page>
