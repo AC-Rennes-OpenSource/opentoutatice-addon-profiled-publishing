@@ -12,25 +12,30 @@
 		value="#{nxu:test(not empty widget.properties.switchItemLabel,widget.properties.switchItemLabel , '')}" />
 
 	<c:if test="#{widget.mode == 'view' }">
-		<c:set var="targets" value="#{targetPublicActions.getKeysChosen()}" />
-
-		<c:if test="#{not empty targets}">
-			<div class="vocSelection">
-				<ul>
-					<c:forEach items="#{targets}" var="target">
-						<li><h:outputText value="#{target}" /></li>
-					</c:forEach>
-				</ul>
-			</div>
-		</c:if>
-		<c:if test="#{empty targets}">
-			<div class="vocSelection">
-				<ul>
-					<li>#{messages[switchItemLabelVoc]}</li>
-				</ul>
-			</div>
-		</c:if>
+	
+		<div class="content_block">
+			<h3 class="summaryTitle">#{widget.label}</h3>
+			<c:set var="targets" value="#{targetPublicActions.getKeysChosen()}" />
+	
+			<c:if test="#{not empty targets}">
+				<div class="vocSelection">
+					<ul>
+						<c:forEach items="#{targets}" var="target">
+							<li><h:outputText value="#{target}" /></li>
+						</c:forEach>
+					</ul>
+				</div>
+			</c:if>
+			<c:if test="#{empty targets}">
+				<div class="vocSelection">
+					<ul>
+						<li>#{messages[switchItemLabelVoc]}</li>
+					</ul>
+				</div>
+			</c:if>
+		</div>
 	</c:if>
+
 
 
 	<c:if test="#{widget.mode == 'edit' }">
