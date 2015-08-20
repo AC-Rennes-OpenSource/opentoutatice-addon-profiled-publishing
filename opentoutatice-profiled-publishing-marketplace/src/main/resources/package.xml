@@ -3,11 +3,9 @@
 	<title>Addon implementing the profiled publishing feature</title>
 	<description>
 		<p> Evolutions:
-			* # 4110 : Visualiser le public cible dans la vue résumé
-			* # 4114 : relooking de widget de selection des cibles
+		
 			Corrections :
-			* # 4112 : Problème de gestion de droits
-			* # 4108 : Problème d'orthographe
+			* # 4265 : initialisation du widget
 		</p>		
 	</description>
 	<home-page>http://www.toutatice.fr</home-page>

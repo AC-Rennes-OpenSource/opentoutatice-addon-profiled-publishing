@@ -43,16 +43,19 @@
 			<a4j:outputPanel id="#{widget.id}_editselect">
 			
 				
-				<c:set var="switchState" value="#{documentActions.mapSwitchState['ttc:lstTargetedPublic']}" />
+		
+				<c:set var="switchState" value="#{documentActions.initSwitchState('ttc:lstTargetedPublic')}" />
+				<h:outputText  value="#{switchState}" style="display:none"/>
+
 				<div class="checkDiv" id="#{widget.id}_check">
 						
-						<h:selectBooleanCheckbox value="#{switchState}" id="#{widget.id}_booleanCheck">		             
+						<h:selectBooleanCheckbox value="#{documentActions.mapSwitchState['ttc:lstTargetedPublic']}" id="#{widget.id}_booleanCheck">		             
 			  				<a4j:ajax event="click" immediate="true" render="#{widget.id}_editselect" execute="@this" limitRender="true"/>
 		     			 	</h:selectBooleanCheckbox>
 						<h:outputText value="#{messages[switchItemLabelVoc]}" />
 						
 				</div>
-				<div id="#{widget.id}_selectbox" style="#{nxu:test(switchState,'display:none;','')}">
+				<div id="#{widget.id}_selectbox" style="#{nxu:test(documentActions.mapSwitchState['ttc:lstTargetedPublic'],'display:none;','')}">
 
 					
 					<nxl:widgetType name="shuttle" mode="edit" value="#{targetPublicActions.lstValuesChosen}" 
