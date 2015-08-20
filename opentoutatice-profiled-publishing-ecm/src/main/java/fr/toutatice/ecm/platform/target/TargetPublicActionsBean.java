@@ -274,8 +274,8 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 		
 			// vérifier si le document courant posséde des cibles
 			DocumentModel doc = navigationContext.getCurrentDocument();
-			lstItemsChosen = new HashMap<String,String>();
-			lstItemsSelectable = new HashMap<String,String>();
+			lstItemsChosen = new LinkedHashMap<String,String>();
+			lstItemsSelectable = new LinkedHashMap<String,String>();
 			
 			Property ppt = doc.getProperty(XPATH_LST_TARGETED_PUBLIC);
 			List<String>tabCibles = ppt.convertTo(ppt.getValue(),List.class);
