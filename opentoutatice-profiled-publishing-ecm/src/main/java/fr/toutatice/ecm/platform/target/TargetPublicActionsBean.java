@@ -49,10 +49,11 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 	protected List<String> groupName;
 	protected String label;
 	protected Integer order;
-	
+	protected Target modifyTarget;
+	protected List<HashMap<String, Object>> lstTarget;
 	
 
-	// -------------------------- gestion de la liste des publics cibles authorisés -----------------------------------
+	// -------------------------- gestion de la liste des publics cibles autorisés -----------------------------------
 
 	@Override
 	public void addTargetPublicAuth() throws ClientException {
@@ -130,6 +131,21 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 		}
 
 	}
+	
+	@Override
+	public void modifyTarget(String groupid){
+		this.modifyTarget = null;
+		if (lstTarget != null && !lstTarget.isEmpty()) {
+			for (HashMap<String, Object> data : lstTarget) {
+				String id = (String) data.get("pcid");
+				if (groupid.equals(id)) {
+					modifyTarget = new Target(groupid, (String)data.get("pclabel"));
+					modifyTarget.setPcorder((Long)data.get("pcorder"));					
+					break;
+				}
+			}
+		}		
+	}
 
 	@Override
 	public List<HashMap<String, Object>> getLstPublishAuth() throws ClientException{
@@ -163,7 +179,17 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 			lst = (List<HashMap<String, Object>>) mapPpty.get(XPATH_LST_PUBLIC_AUTH).getValue();
 			Collections.sort(lst, new PublicTargetComparator());
 		}
+		this.lstTarget = lst;
 		return lst;
+	}
+
+
+	public Target getModifyTarget() {
+		return modifyTarget;
+	}
+
+	public void setModifyTarget(Target modifyTarget) {
+		this.modifyTarget = modifyTarget;
 	}
 
 	@Override
@@ -195,7 +221,35 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 	public void setOrder(Integer order) {
 		this.order = order;
 	}
+	
 
+	
+	@Override
+	public void cancelModify(){
+		this.modifyTarget = null;
+	}
+
+	@Override
+	public void validateModify(){
+		DocumentModel psDoc = navigationContext.getCurrentDocument();
+		if (lstTarget != null && !lstTarget.isEmpty()) {
+			Boolean b=false;
+			for (HashMap<String, Object> data : lstTarget) {
+				String id = (String) data.get("pcid");
+				if (this.modifyTarget.getPcid().equals(id)) {
+					data.put("pclabel", this.modifyTarget.getPclabel());
+					data.put("pcorder", this.modifyTarget.getPcorder());
+					b=true;
+					break;
+				}
+			}
+			if(b){
+				psDoc.setPropertyValue(XPATH_LST_PUBLIC_AUTH, lstTarget.toArray(new Object[lstTarget.size()]));
+				documentManager.saveDocument(psDoc);
+			}
+		}
+		
+	}
 	// --------------------------- Gestion des publics cibles sélectionnés -----------------------------------------------
 
 	private Map<String,String> lstItemsSelectable = null;	
@@ -323,9 +377,10 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 
 	}
 	
-	 protected class Target{
+	 public class Target{
 		 String pcid;
 		 String pclabel;
+		 Long pcorder;
 		 
 		 public Target(String id, String label){
 			 this.pcid = id;
@@ -343,6 +398,12 @@ public class TargetPublicActionsBean extends InputController implements TargetPu
 		}
 		public void setPclabel(String pclabel) {
 			this.pclabel = pclabel;
+		}
+		public Long getPcorder(){
+			return this.pcorder;
+		}
+		public void setPcorder(Long order){
+			this.pcorder=order;
 		}
 	 }
 

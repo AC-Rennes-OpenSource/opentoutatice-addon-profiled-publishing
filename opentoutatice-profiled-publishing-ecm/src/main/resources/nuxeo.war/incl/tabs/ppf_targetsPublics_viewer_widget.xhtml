@@ -5,16 +5,6 @@
 	xmlns:nxu="http://nuxeo.org/nxweb/util"
 	xmlns:nxl="http://nuxeo.org/nxforms/layout"
 	xmlns:a4j="http://richfaces.org/a4j">
-
-
-	<!-- <c:choose>
-		<c:when test="#{widget.mode =='edit'}">
-			<c:set var="doc" value="#{currentDocument}" />
-		</c:when>
-		<c:otherwise>
-			<c:set var="doc" value="#{documentManager.getDocument((currentDocument.getParentRef()))}" />
-		</c:otherwise>
-	</c:choose> -->
 	
 	<c:set var="lstAuth" value="#{targetPublicActions.getLstPublishAuth()}" />
 
@@ -43,6 +33,13 @@
 			</nxu:column>
 			<nxu:column styleClass="iconColumn">
 				<a4j:commandLink immediate="true"
+					action="#{targetPublicActions.modifyTarget(public.pcid)}"
+					render="targetPublicList" ignoreDupResponses="true">
+					<h:graphicImage value="/icons/modify.png" />
+				</a4j:commandLink>
+			</nxu:column>
+			<nxu:column styleClass="iconColumn">
+				<a4j:commandLink immediate="true"
 					action="#{targetPublicActions.removeTargetPublicAuth(public.pcid)}"
 					render="targetPublicList" ignoreDupResponses="true">
 					<h:graphicImage value="/icons/delete_red.png" />
@@ -50,8 +47,34 @@
 			</nxu:column>
 
 		</nxu:dataTable>
+	
+	
+		<c:if test="#{not empty targetPublicActions.modifyTarget}">
+		<div id="divModifyTarget" style="margin: 0px 150px;background-color: rgb(248, 249, 251);padding: 5px 15px;">
+		   <h4>Modifier le libellé ou/et ordre de la cible "#{targetPublicActions.modifyTarget.pcid}"</h4>
+		   <div>
+				<span class="rightsAddLabel"><h:outputText
+						value="#{messages['ppf.group.label']}" /></span>
+				<h:inputText value="#{targetPublicActions.modifyTarget.pclabel}" />
+			</div>
+	
+			<div>
+				<span class="rightsAddLabel"><h:outputText
+						value="#{messages['ppf.group.order']}" /></span>
+				<h:inputText value="#{targetPublicActions.modifyTarget.pcorder}" />
+			</div>
+			<div>
+					<h:commandButton value="#{messages['ppf.command.target.cancel']}"
+						class="button"	action="#{targetPublicActions.cancelModify()}" 
+						render="targetPublicList" ignoreDupResponses="true"/>
+					<h:commandButton value="#{messages['ppf.command.target.validate']}"
+						class="button"
+						action="#{targetPublicActions.validateModify()}" 
+						render="targetPublicList" ignoreDupResponses="true"/>
+			</div>
+		</div>
+		</c:if>
 	</a4j:outputPanel>
-
 	<c:if test="#{widget.mode =='edit'}">
 		<h3>Ajouter un groupe dans la liste de publics cibles autorisés</h3>
 

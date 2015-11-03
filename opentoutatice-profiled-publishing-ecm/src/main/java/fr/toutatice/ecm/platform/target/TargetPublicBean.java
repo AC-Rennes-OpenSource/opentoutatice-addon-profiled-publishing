@@ -11,6 +11,8 @@ public interface TargetPublicBean {
 	public abstract void addTargetPublicAuth() throws ClientException;
 	
 	public abstract void removeTargetPublicAuth(String id) throws ClientException;
+	
+	public void modifyTarget(String groupid);	
 
 	public abstract List<String> getGroupName();
 
@@ -25,5 +27,9 @@ public interface TargetPublicBean {
 	public abstract void setOrder(Integer order);
 	
 	public List<HashMap<String, Object>> getLstPublishAuth() throws ClientException;
+	
+	public void cancelModify();
+	
+	public void validateModify();
 
 }
