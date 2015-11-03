@@ -3,10 +3,10 @@
 	<title>Addon implementing the profiled publishing feature</title>
 	<description>
 		<p> Evolutions:
-		
+			* #5104 : possibilité de modifier le libellé et l'ordre des cibles autorisées
+			
 			Corrections :
-			* # 4269 : ordre d'affichage des cibles
-			* # 4265 : fix sur le composant public cible
+			
 		</p>		
 	</description>
 	<home-page>http://www.toutatice.fr</home-page>
