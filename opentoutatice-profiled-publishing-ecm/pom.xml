@@ -5,34 +5,26 @@
 	<parent>
 		<groupId>opentoutatice-ecm.profiled-publishing</groupId>
 		<artifactId>opentoutatice-profiled-publishing-parent</artifactId>
-		<version>2.0.3-SNAPSHOT</version>
+		<version>3.0-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>opentoutatice-platform-profiled-publishing-ecm</artifactId>
 	<packaging>jar</packaging>
 	<name>profiled publishing feature</name>
 
-	<properties>
-		<opentoutatice.platform.version>3.0.0</opentoutatice.platform.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>opentoutatice-ecm.platform</groupId>
 			<artifactId>opentoutatice-ecm-platform-core</artifactId>
-			<version>${opentoutatice.platform.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>opentoutatice-ecm.platform</groupId>
 			<artifactId>opentoutatice-ecm-platform-automation</artifactId>
-			<version>${opentoutatice.platform.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>opentoutatice-ecm.platform</groupId>
 			<artifactId>opentoutatice-ecm-platform-web</artifactId>
-			<version>${opentoutatice.platform.version}</version>
 		</dependency>
-		
 	</dependencies>
 	
 	<build>

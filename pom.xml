@@ -8,16 +8,37 @@
 	<packaging>pom</packaging>
 	<description>Addon to profiled publishing</description>
 	<name>opentoutatice-profiled-publishing-parent</name>
-	<version>2.0.3-SNAPSHOT</version>
+	<version>3.0-SNAPSHOT</version>
 
 	<properties>
-		<nuxeo.version>6.0-HF09</nuxeo.version>
+		<nuxeo.version>6.0-HF34</nuxeo.version>
+		<opentoutatice.platform.version>4.6-SNAPSHOT</opentoutatice.platform.version>
 	</properties>
 
 	<modules>
 	   <module>opentoutatice-profiled-publishing-ecm</module>
 	   <module>opentoutatice-profiled-publishing-marketplace</module>
 	</modules>
+	
+	<dependencyManagement>
+			<dependencies>
+				<dependency>
+					<groupId>opentoutatice-ecm.platform</groupId>
+					<artifactId>opentoutatice-ecm-platform-core</artifactId>
+					<version>${opentoutatice.platform.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>opentoutatice-ecm.platform</groupId>
+					<artifactId>opentoutatice-ecm-platform-automation</artifactId>
+					<version>${opentoutatice.platform.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>opentoutatice-ecm.platform</groupId>
+					<artifactId>opentoutatice-ecm-platform-web</artifactId>
+					<version>${opentoutatice.platform.version}</version>
+				</dependency>
+			</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
