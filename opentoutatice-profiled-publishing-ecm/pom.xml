@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>opentoutatice-ecm.profiled-publishing</groupId>
 		<artifactId>opentoutatice-profiled-publishing-parent</artifactId>
-		<version>4.6-SNAPSHOT</version>
+		<version>4.6</version>
 	</parent>
 	
 	<artifactId>opentoutatice-platform-profiled-publishing-ecm</artifactId>
@@ -68,7 +68,7 @@
 	</build>
 
 	<scm>
-		<developerConnection>scm:svn:http://projet.toutatice.fr/repos/toutatice-ecm/opentoutatice-addons/opentoutatice-profiled-publishing/trunk</developerConnection>
+		<developerConnection>scm:svn:http://projet.toutatice.fr/repos/toutatice-ecm/opentoutatice-addons/opentoutatice-profiled-publishing/tags/4.6/trunk</developerConnection>
 	</scm>
 	
 	<distributionManagement>
