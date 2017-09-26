@@ -13,8 +13,8 @@
 	<properties>
 		<nuxeo.version>6.0-HF37</nuxeo.version>
 		<nuxeo.cap.version>6.0</nuxeo.cap.version>
-		<nuxeo.opentoutatice.version>4.6.0-RC01</nuxeo.opentoutatice.version>
-		<opentoutatice.generic.ui.version>4.6.0-RC01</opentoutatice.generic.ui.version>
+		<nuxeo.opentoutatice.version>4.6</nuxeo.opentoutatice.version>
+		<opentoutatice.generic.ui.version>4.6</opentoutatice.generic.ui.version>
 	</properties>
 
 	<modules>
