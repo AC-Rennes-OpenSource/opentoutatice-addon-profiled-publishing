@@ -93,7 +93,7 @@ public class PPFEventListener implements EventListener, PPFConstants {
 		}
 		boolean isPcDirty = false;
 		// si le public cible existe et a changé alors mise à jours des acls
-		if (pptPublicCible != null) {
+		if (pptPublicCible.getValue() != null) {
 			isPcDirty = pptPublicCible.isDirty();
 		}
 
