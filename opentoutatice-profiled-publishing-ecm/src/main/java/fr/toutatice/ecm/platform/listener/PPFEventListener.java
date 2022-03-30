@@ -31,7 +31,10 @@ public class PPFEventListener implements EventListener, PPFConstants {
 			DocumentEventContext eventContext = (DocumentEventContext) event.getContext();
 			DocumentModel doc = eventContext.getSourceDocument();
 
-			if (null != doc && (doc.isImmutable() || doc.hasFacet(FacetNames.HIDDEN_IN_NAVIGATION) || doc.hasFacet(FacetNames.SYSTEM_DOCUMENT))) {
+			/* BUG FIX : filtrer les documents de type 'espace de publication' qui doivent échapper 
+			 * aux traitements de positionnement des publics cibles (réservés aux contenus de l'espace).
+			 */
+			if (null != doc && (doc.isImmutable() || doc.hasFacet(FacetNames.HIDDEN_IN_NAVIGATION) || doc.hasFacet(FacetNames.SYSTEM_DOCUMENT) || ToutaticeDocumentHelper.isAPublicationSpaceDocument(doc))) {
 				return;
 			}
 
@@ -93,10 +96,10 @@ public class PPFEventListener implements EventListener, PPFConstants {
 		}
 		boolean isPcDirty = false;
 		// si le public cible existe et a changé alors mise à jours des acls
-		if (pptPublicCible.getValue() != null) {
+		if (pptPublicCible != null) {
 			isPcDirty = pptPublicCible.isDirty();
 		}
-
+		
 		if (isPcDirty || immediate) {
 
 			try {
