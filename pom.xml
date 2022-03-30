@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 	<description>Addon to profiled publishing</description>
 	<name>opentoutatice-profiled-publishing-parent</name>
-	<version>4.7.19-RC01-SNAPSHOT</version>
+	<version>4.7.19-RC01</version>
 
 	<properties>
 		<nuxeo.version>6.1.1</nuxeo.version>
@@ -88,7 +88,7 @@
 	</build>
 
 	<scm>
-		<developerConnection>scm:svn:http://projet.toutatice.fr/repos/toutatice-ecm/opentoutatice-addons/opentoutatice-profiled-publishing/trunk</developerConnection>
+		<developerConnection>scm:svn:http://projet.toutatice.fr/repos/toutatice-ecm/opentoutatice-addons/opentoutatice-profiled-publishing/tags/4.7.19-RC01</developerConnection>
 	</scm>
 	
     <distributionManagement>
