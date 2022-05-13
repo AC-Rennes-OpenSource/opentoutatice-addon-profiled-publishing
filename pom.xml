@@ -11,10 +11,8 @@
 	<version>4.7.20-RC01-SNAPSHOT</version>
 
 	<properties>
-		<nuxeo.version>6.1.1</nuxeo.version>
-		<!-- <nuxeo.cap.version>6.0</nuxeo.cap.version> -->
-		<nuxeo.opentoutatice.version>4.7.17</nuxeo.opentoutatice.version>
-		<!-- <opentoutatice.generic.ui.version>4.7.17</opentoutatice.generic.ui.version> -->
+		<nuxeo.version>RAB-6.1.5</nuxeo.version>
+		<nuxeo.opentoutatice.version>RAB-4.7.44</nuxeo.opentoutatice.version>
 	</properties>
 
 	<modules>
@@ -24,15 +22,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-		  <!-- 
-			<dependency>
-				<groupId>org.nuxeo.ecm.distribution</groupId>
-				<artifactId>nuxeo-distribution-cap</artifactId>
-				<version>${nuxeo.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
- -->
 			<dependency>
 				<groupId>opentoutatice-ecm.platform</groupId>
 				<artifactId>opentoutatice-ecm-platform-core</artifactId>
@@ -87,20 +76,23 @@
 		</pluginManagement>
 	</build>
 
-	<scm>
-		<developerConnection>scm:svn:http://projet.toutatice.fr/repos/toutatice-ecm/opentoutatice-addons/opentoutatice-profiled-publishing/trunk</developerConnection>
-	</scm>
-	
-    <distributionManagement>
-        <repository>
-            <id>toutatice-releases</id>
-            <url>http://projet.toutatice.fr/nexus3/repository/toutatice-releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>toutatice-snapshots</id>
-            <url>http://projet.toutatice.fr/nexus3/repository/toutatice-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement> 
+      <scm>
+                <url>https://github.com/AC-Rennes-OpenSource/opentoutatice-addon-profiled-publishing</url>
+                <connection>scm:git:https://github.com/AC-Rennes-OpenSource/opentoutatice-addon-profiled-publishing.git</connection>
+                <developerConnection>scm:git:https://github.com/AC-Rennes-OpenSource/opentoutatice-addon-profiled-publishing.git</developerConnection>
+                <tag>HEAD</tag>
+        </scm>
+
+        <distributionManagement>
+                <repository>
+                        <id>${releaseRepoId}</id>
+                        <url>${releaseRepoUrl}</url>
+                </repository>
+                <snapshotRepository>
+                        <id>${snapshotRepoId}</id>
+                        <url>${snapshotRepoUrl}</url>
+                </snapshotRepository>
+        </distributionManagement>
 
 </project>
 
