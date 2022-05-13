@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 	<description>Addon to profiled publishing</description>
 	<name>opentoutatice-profiled-publishing-parent</name>
-	<version>4.7.20-RC01-SNAPSHOT</version>
+	<version>RAB-4.7.20</version>
 
 	<properties>
 		<nuxeo.version>RAB-6.1.5</nuxeo.version>
