@@ -6,7 +6,7 @@
     <parent>
         <groupId>opentoutatice-ecm.profiled-publishing</groupId>
         <artifactId>opentoutatice-profiled-publishing-parent</artifactId>
-        <version>RAB-4.7.20</version>
+        <version>RAB-4.7.21-SNAPSHOT</version>
     </parent>
 
     <artifactId>opentoutatice-platform-profiled-publishing-ecm</artifactId>
